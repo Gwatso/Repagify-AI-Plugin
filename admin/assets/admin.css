@@ -1,0 +1,107 @@
+/**
+ * Repagify admin styles.
+ *
+ * Loaded only on the plugin's own screens.
+ */
+
+.repagify-wrap .repagify-intro {
+	max-width: 46em;
+	font-size: 14px;
+}
+
+.repagify-wrap .repagify-key-preview {
+	margin: 0 0 8px;
+}
+
+.repagify-wrap .repagify-key-preview code {
+	padding: 4px 8px;
+	font-size: 13px;
+	letter-spacing: 1px;
+}
+
+.repagify-badge {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 2px 8px;
+	border-radius: 9px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.6;
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+}
+
+.repagify-badge--saved {
+	background: #edfaef;
+	color: #00652b;
+	border: 1px solid #b8e6c4;
+}
+
+.repagify-inline-label {
+	display: inline-block;
+	margin-left: 12px;
+}
+
+.repagify-hint {
+	margin-top: -6px;
+	color: #646970;
+	font-style: italic;
+}
+
+#repagify-test-spinner {
+	float: none;
+	margin: 0 0 0 6px;
+	vertical-align: middle;
+}
+
+#repagify-test-spinner.is-active {
+	visibility: visible;
+}
+
+.repagify-result {
+	margin-top: 12px;
+	max-width: 46em;
+}
+
+.repagify-result:empty {
+	display: none;
+}
+
+.repagify-notice {
+	padding: 10px 14px;
+	border-left: 4px solid #72aee6;
+	background: #fff;
+	box-shadow: 0 1px 1px rgba( 0, 0, 0, 0.04 );
+}
+
+.repagify-notice--success {
+	border-left-color: #00a32a;
+}
+
+.repagify-notice--error {
+	border-left-color: #d63638;
+}
+
+.repagify-notice p {
+	margin: 0 0 6px;
+}
+
+.repagify-notice p:last-child {
+	margin-bottom: 0;
+}
+
+.repagify-account {
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.repagify-account li {
+	margin: 0 0 4px;
+}
+
+.repagify-account .repagify-account-label {
+	display: inline-block;
+	min-width: 12em;
+	color: #646970;
+}
