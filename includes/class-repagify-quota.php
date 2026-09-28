@@ -332,11 +332,11 @@ class Repagify_Quota {
 	 */
 	public static function quota_phrase( $account ) {
 		if ( ! is_array( $account ) ) {
-			return __( 'Plan details unavailable', 'repagify' );
+			return __( 'Plan details unavailable', 'repagify-plugin' );
 		}
 
 		if ( self::is_unlimited( $account ) ) {
-			return __( 'Unlimited generations', 'repagify' );
+			return __( 'Unlimited generations', 'repagify-plugin' );
 		}
 
 		$remaining = (int) $account['remaining'];
@@ -345,7 +345,7 @@ class Repagify_Quota {
 		if ( $remaining <= 0 ) {
 			return sprintf(
 				/* translators: %s: the account's generation allowance. */
-				__( '0 of %s generations remaining', 'repagify' ),
+				__( '0 of %s generations remaining', 'repagify-plugin' ),
 				number_format_i18n( $limit )
 			);
 		}
@@ -353,7 +353,7 @@ class Repagify_Quota {
 		if ( self::LIMIT_MONTHLY === $account['limit_type'] ) {
 			return sprintf(
 				/* translators: 1: generations left, 2: the plan's monthly cap. */
-				__( '%1$s of %2$s generations left this month', 'repagify' ),
+				__( '%1$s of %2$s generations left this month', 'repagify-plugin' ),
 				number_format_i18n( $remaining ),
 				number_format_i18n( $limit )
 			);
@@ -361,7 +361,7 @@ class Repagify_Quota {
 
 		return sprintf(
 			/* translators: 1: generations left, 2: the account's lifetime cap. */
-			__( '%1$s of %2$s free generations left', 'repagify' ),
+			__( '%1$s of %2$s free generations left', 'repagify-plugin' ),
 			number_format_i18n( $remaining ),
 			number_format_i18n( $limit )
 		);
@@ -390,11 +390,11 @@ class Repagify_Quota {
 
 		if ( self::TIER_PRO === $tier || self::TIER_AGENCY === $tier ) {
 			return array(
-				'title'   => __( 'Generation could not be completed', 'repagify' ),
+				'title'   => __( 'Generation could not be completed', 'repagify-plugin' ),
 				'message' => '' !== $service_message
 					? $service_message
-					: __( 'Your Repagify plan includes unlimited generations, so this limit should not apply to your account. Nothing was charged and nothing on your site changed.', 'repagify' ),
-				'note'    => __( 'If this keeps happening, contact Repagify support with the time it occurred.', 'repagify' ),
+					: __( 'Your Repagify plan includes unlimited generations, so this limit should not apply to your account. Nothing was charged and nothing on your site changed.', 'repagify-plugin' ),
+				'note'    => __( 'If this keeps happening, contact Repagify support with the time it occurred.', 'repagify-plugin' ),
 				'url'     => '',
 				'label'   => '',
 			);
@@ -402,21 +402,21 @@ class Repagify_Quota {
 
 		if ( self::TIER_CREATOR === $tier ) {
 			return array(
-				'title'   => __( 'Your Repagify account has no generations left this month', 'repagify' ),
-				'message' => __( 'This account has used all 20 generations its Repagify Creator plan includes this month. The service’s Pro plan includes unlimited generations, a more capable model, and brand voice matching for $19.', 'repagify' ),
+				'title'   => __( 'Your Repagify account has no generations left this month', 'repagify-plugin' ),
+				'message' => __( 'This account has used all 20 generations its Repagify Creator plan includes this month. The service’s Pro plan includes unlimited generations, a more capable model, and brand voice matching for $19.', 'repagify-plugin' ),
 				'note'    => self::reset_note( $account ),
 				'url'     => self::PRICING_URL . '#pro',
-				'label'   => __( 'View Repagify Pro plan', 'repagify' ),
+				'label'   => __( 'View Repagify Pro plan', 'repagify-plugin' ),
 			);
 		}
 
 		// Free, and anything unrecognised, gets the entry-level offer.
 		return array(
-			'title'   => __( 'Your Repagify account has no generations left', 'repagify' ),
-			'message' => __( 'This account has used both of the free generations its Repagify plan includes. Generation is performed by the Repagify web service, whose Creator plan includes 20 generations a month for $9.', 'repagify' ),
+			'title'   => __( 'Your Repagify account has no generations left', 'repagify-plugin' ),
+			'message' => __( 'This account has used both of the free generations its Repagify plan includes. Generation is performed by the Repagify web service, whose Creator plan includes 20 generations a month for $9.', 'repagify-plugin' ),
 			'note'    => self::TIER_FREE === $tier ? '' : self::reset_note( $account ),
 			'url'     => self::PRICING_URL . '#creator',
-			'label'   => __( 'View Repagify Creator plan', 'repagify' ),
+			'label'   => __( 'View Repagify Creator plan', 'repagify-plugin' ),
 		);
 	}
 
@@ -437,13 +437,13 @@ class Repagify_Quota {
 			if ( false !== $timestamp ) {
 				return sprintf(
 					/* translators: %s: date the generation allowance resets. */
-					__( 'Your Repagify allowance resets on %s.', 'repagify' ),
+					__( 'Your Repagify allowance resets on %s.', 'repagify-plugin' ),
 					date_i18n( get_option( 'date_format' ), $timestamp )
 				);
 			}
 		}
 
-		return __( 'Your Repagify allowance resets at the start of next month.', 'repagify' );
+		return __( 'Your Repagify allowance resets at the start of next month.', 'repagify-plugin' );
 	}
 
 	/**
@@ -456,10 +456,10 @@ class Repagify_Quota {
 	 */
 	public static function tier_label( $tier ) {
 		$labels = array(
-			self::TIER_FREE    => __( 'Free', 'repagify' ),
-			self::TIER_CREATOR => __( 'Creator', 'repagify' ),
-			self::TIER_PRO     => __( 'Pro', 'repagify' ),
-			self::TIER_AGENCY  => __( 'Agency', 'repagify' ),
+			self::TIER_FREE    => __( 'Free', 'repagify-plugin' ),
+			self::TIER_CREATOR => __( 'Creator', 'repagify-plugin' ),
+			self::TIER_PRO     => __( 'Pro', 'repagify-plugin' ),
+			self::TIER_AGENCY  => __( 'Agency', 'repagify-plugin' ),
 		);
 
 		if ( isset( $labels[ $tier ] ) ) {
@@ -467,7 +467,7 @@ class Repagify_Quota {
 		}
 
 		if ( '' === $tier ) {
-			return __( 'Unknown', 'repagify' );
+			return __( 'Unknown', 'repagify-plugin' );
 		}
 
 		return ucwords( str_replace( array( '_', '-' ), ' ', $tier ) );

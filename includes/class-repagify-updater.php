@@ -191,14 +191,10 @@ class Repagify_Updater {
 			'requires_php'  => '' !== $readme['requires_php'] ? $readme['requires_php'] : '7.4',
 			'short_description' => $readme['short_description'],
 			'sections'      => $readme['sections'],
-			'banners'       => array(
-				'low'  => 'https://raw.githubusercontent.com/' . self::REPO . '/main/assets/banner-772x250.png',
-				'high' => 'https://raw.githubusercontent.com/' . self::REPO . '/main/assets/banner-1544x500.png',
-			),
-			'icons'         => array(
-				'1x' => 'https://raw.githubusercontent.com/' . self::REPO . '/main/assets/icon-128x128.png',
-				'2x' => 'https://raw.githubusercontent.com/' . self::REPO . '/main/assets/icon-256x256.png',
-			),
+			// No banners or icons are declared here on purpose. Pointing them at
+			// a remote host counts as offloading assets, which WordPress.org
+			// disallows, and once the plugin is in the directory those images
+			// are served from its own CDN from the repository's assets folder.
 		);
 
 		if ( is_array( $release ) ) {

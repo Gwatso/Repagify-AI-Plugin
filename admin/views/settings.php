@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php settings_errors(); ?>
 
 	<p class="repagify-intro">
-		<?php esc_html_e( 'Repagify turns posts you have already published into SEO blog posts, LinkedIn posts, X threads and newsletters. Connect your account below to get started.', 'repagify' ); ?>
+		<?php esc_html_e( 'Repagify turns posts you have already published into SEO blog posts, LinkedIn posts, X threads and newsletters. Connect your account below to get started.', 'repagify-plugin' ); ?>
 	</p>
 
 	<form action="options.php" method="post">
@@ -32,10 +32,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<hr />
 
-	<h2><?php esc_html_e( 'Connection test', 'repagify' ); ?></h2>
+	<h2><?php esc_html_e( 'Connection test', 'repagify-plugin' ); ?></h2>
 
 	<p class="description">
-		<?php esc_html_e( 'Checks that the saved key can reach the Repagify API and reads back your plan. Save your settings first.', 'repagify' ); ?>
+		<?php esc_html_e( 'Checks that the saved key can reach the Repagify API and reads back your plan. Save your settings first.', 'repagify-plugin' ); ?>
 	</p>
 
 	<p>
@@ -43,16 +43,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 			type="button"
 			class="button button-secondary"
 			id="repagify-test-connection"
-			data-default-label="<?php esc_attr_e( 'Test connection', 'repagify' ); ?>"
+			data-default-label="<?php esc_attr_e( 'Test connection', 'repagify-plugin' ); ?>"
 			<?php disabled( ! Repagify_Settings::has_api_key() ); ?>
 		>
-			<?php esc_html_e( 'Test connection', 'repagify' ); ?>
+			<?php esc_html_e( 'Test connection', 'repagify-plugin' ); ?>
 		</button>
 		<span class="spinner" id="repagify-test-spinner"></span>
 	</p>
 
 	<?php if ( ! Repagify_Settings::has_api_key() ) : ?>
-		<p class="repagify-hint"><?php esc_html_e( 'Save an API key to enable this test.', 'repagify' ); ?></p>
+		<p class="repagify-hint"><?php esc_html_e( 'Save an API key to enable this test.', 'repagify-plugin' ); ?></p>
 	<?php endif; ?>
 
 	<div id="repagify-test-result" class="repagify-result" role="status" aria-live="polite"></div>

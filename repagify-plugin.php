@@ -10,7 +10,7 @@
  * Author URI:        https://repagify.afriflare.com
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       repagify
+ * Text Domain:       repagify-plugin
  * Domain Path:       /languages
  * Update URI:        https://github.com/Gwatso/Repagify-AI-Plugin
  *
@@ -87,24 +87,16 @@ function repagify_bootstrap() {
 }
 add_action( 'plugins_loaded', 'repagify_bootstrap' );
 
-/**
- * Loads translations.
+/*
+ * Translations are loaded by WordPress itself.
  *
- * Hooked to init because loading a text domain any earlier is flagged as an
- * error by WordPress 6.7 and later.
- *
- * @since 0.1.0
- *
- * @return void
+ * Since WordPress 4.6 a plugin distributed through the directory has its
+ * translations loaded automatically from the Text Domain header, and calling
+ * load_plugin_textdomain() is both redundant and flagged by Plugin Check. The
+ * Text Domain and Domain Path headers at the top of this file are all that is
+ * required.
  */
-function repagify_load_textdomain() {
-	load_plugin_textdomain(
-		'repagify',
-		false,
-		dirname( plugin_basename( REPAGIFY_FILE ) ) . '/languages'
-	);
-}
-add_action( 'init', 'repagify_load_textdomain' );
+
 
 /**
  * Writes the default options the first time the plugin is activated.

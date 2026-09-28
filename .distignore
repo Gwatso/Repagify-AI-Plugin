@@ -8,11 +8,14 @@
 .git
 .gitignore
 .gitattributes
-.github
+/.github
 .distignore
 
-# WP.org directory listing assets — published separately, never shipped
-assets/
+# WP.org directory listing assets — published separately, never shipped.
+# The leading slash anchors this to the repository root. Without it the pattern
+# matches any directory called "assets" at any depth, which would strip
+# admin/assets/ and ship the plugin with no CSS or JavaScript.
+/assets/
 
 # Project documentation, not user documentation
 CLAUDE.md

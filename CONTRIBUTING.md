@@ -102,14 +102,14 @@ Please do not send patches adding these:
 
 ## Internationalisation
 
-Text domain is `repagify`, loaded from `/languages`. Wrap every user-facing
+Text domain is `repagify-plugin`, matching the plugin folder name, loaded from `/languages`. Plugin Check derives the expected domain from the folder, so the two must stay in step. Wrap every user-facing
 string, use `printf`-style placeholders rather than concatenation, and add a
 `translators:` comment wherever a placeholder's meaning is not obvious:
 
 ```php
 printf(
     /* translators: %s: formatted word count. */
-    esc_html__( '%s words will be sent.', 'repagify' ),
+    esc_html__( '%s words will be sent.', 'repagify-plugin' ),
     esc_html( number_format_i18n( $words ) )
 );
 ```
@@ -120,7 +120,7 @@ hardcode user-facing English in a `.js` file.
 Regenerate the translation template after changing any string:
 
 ```
-wp i18n make-pot . languages/repagify.pot
+wp i18n make-pot . languages/repagify-plugin.pot
 ```
 
 ## Pull requests

@@ -46,22 +46,22 @@ class Repagify_Formats {
 		return array(
 			'seo_blog'      => array(
 				'api'     => 'blog',
-				'label'   => __( 'Blog Post', 'repagify' ),
+				'label'   => __( 'Blog Post', 'repagify-plugin' ),
 				'keyword' => true,
 			),
 			'linkedin_post' => array(
 				'api'     => 'linkedin',
-				'label'   => __( 'LinkedIn Post', 'repagify' ),
+				'label'   => __( 'LinkedIn Post', 'repagify-plugin' ),
 				'keyword' => false,
 			),
 			'x_thread'      => array(
 				'api'     => 'twitter',
-				'label'   => __( 'X Thread', 'repagify' ),
+				'label'   => __( 'X Thread', 'repagify-plugin' ),
 				'keyword' => false,
 			),
 			'newsletter'    => array(
 				'api'     => 'newsletter',
-				'label'   => __( 'Newsletter', 'repagify' ),
+				'label'   => __( 'Newsletter', 'repagify-plugin' ),
 				'keyword' => false,
 			),
 		);
@@ -141,11 +141,11 @@ class Repagify_Formats {
 	 */
 	public static function tones() {
 		return array(
-			'professional'   => __( 'Professional', 'repagify' ),
-			'conversational' => __( 'Conversational', 'repagify' ),
-			'authoritative'  => __( 'Authoritative', 'repagify' ),
-			'casual'         => __( 'Casual', 'repagify' ),
-			'inspirational'  => __( 'Inspirational', 'repagify' ),
+			'professional'   => __( 'Professional', 'repagify-plugin' ),
+			'conversational' => __( 'Conversational', 'repagify-plugin' ),
+			'authoritative'  => __( 'Authoritative', 'repagify-plugin' ),
+			'casual'         => __( 'Casual', 'repagify-plugin' ),
+			'inspirational'  => __( 'Inspirational', 'repagify-plugin' ),
 		);
 	}
 

@@ -75,10 +75,10 @@ class Repagify_Readme {
 		$raw = str_replace( array( "\r\n", "\r" ), "\n", $raw );
 
 		$parsed = array(
-			'requires'          => self::header( $raw, 'Requires at least' ),
-			'tested'            => self::header( $raw, 'Tested up to' ),
-			'requires_php'      => self::header( $raw, 'Requires PHP' ),
-			'stable_tag'        => self::header( $raw, 'Stable tag' ),
+			'requires'          => self::read_header( $raw, 'Requires at least' ),
+			'tested'            => self::read_header( $raw, 'Tested up to' ),
+			'requires_php'      => self::read_header( $raw, 'Requires PHP' ),
+			'stable_tag'        => self::read_header( $raw, 'Stable tag' ),
 			'short_description' => self::short_description( $raw ),
 			'sections'          => self::sections( $raw ),
 		);
@@ -96,12 +96,12 @@ class Repagify_Readme {
 	 */
 	protected static function with_fallback( $parsed ) {
 		if ( '' === $parsed['short_description'] ) {
-			$parsed['short_description'] = __( 'Find the dormant posts in your archive worth reusing, then turn the best of them into blog posts, LinkedIn posts, X threads and newsletters.', 'repagify' );
+			$parsed['short_description'] = __( 'Find the dormant posts in your archive worth reusing, then turn the best of them into blog posts, LinkedIn posts, X threads and newsletters.', 'repagify-plugin' );
 		}
 
 		if ( empty( $parsed['sections'] ) || empty( $parsed['sections']['description'] ) ) {
 			$parsed['sections']['description'] = wpautop(
-				esc_html__( 'Repagify scans your published archive entirely on your own server, scores every post for repurposing potential, and turns the ones worth reusing into blog posts, LinkedIn posts, X threads and newsletters. Scanning needs no account; generating needs a free Repagify account.', 'repagify' )
+				esc_html__( 'Repagify scans your published archive entirely on your own server, scores every post for repurposing potential, and turns the ones worth reusing into blog posts, LinkedIn posts, X threads and newsletters. Scanning needs no account; generating needs a free Repagify account.', 'repagify-plugin' )
 			);
 		}
 
@@ -111,13 +111,16 @@ class Repagify_Readme {
 	/**
 	 * Reads one colon-delimited header from the top of the file.
 	 *
+	 * Named read_header rather than header so that a security audit grepping
+	 * for PHP's header() does not have to stop and check this one.
+	 *
 	 * @since 0.6.0
 	 *
 	 * @param string $raw   Readme contents.
 	 * @param string $label Header label.
 	 * @return string
 	 */
-	protected static function header( $raw, $label ) {
+	protected static function read_header( $raw, $label ) {
 		if ( ! preg_match( '/^' . preg_quote( $label, '/' ) . ':\s*(.+)$/mi', $raw, $matches ) ) {
 			return '';
 		}
