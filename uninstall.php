@@ -16,10 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Removes the plugin's options from the current site.
- *
- * Phase 1 stores a single option. Post meta cleanup is added alongside the
- * generation flow that creates it.
+ * Removes the plugin's options, caches and post meta from the current site.
  *
  * @since 0.1.0
  *
@@ -27,6 +24,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function repagify_uninstall_site() {
 	delete_option( 'repagify_settings' );
+	delete_transient( 'repagify_scan_cache' );
+	delete_transient( 'repagify_account_cache' );
+	delete_transient( 'repagify_account_failure' );
+	delete_post_meta_by_key( '_repagify_converted' );
 }
 
 if ( is_multisite() ) {

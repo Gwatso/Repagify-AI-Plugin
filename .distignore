@@ -1,0 +1,50 @@
+# Files and directories that must NOT appear in the distributed plugin zip.
+#
+# Everything listed here lives in the repository but has no business on a
+# user's server. The WP.org directory listing assets in assets/ are published
+# from the repository's own assets/ folder, never from the plugin package.
+
+# Version control
+.git
+.gitignore
+.gitattributes
+.github
+.distignore
+
+# WP.org directory listing assets — published separately, never shipped
+assets/
+
+# Project documentation, not user documentation
+CLAUDE.md
+CONTRIBUTING.md
+README.md
+
+# Tests and local tooling
+tests/
+scratch/
+phpunit.xml
+phpunit.xml.dist
+phpcs.xml
+phpcs.xml.dist
+.phpcs.xml.dist
+composer.json
+composer.lock
+package.json
+package-lock.json
+node_modules/
+vendor/
+
+# Build output and scratch
+.dist/
+dist/
+build/
+*.zip
+*.log
+*.tmp
+*.bak
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -42,6 +42,19 @@ class Repagify_Settings {
 	const PAGE = 'repagify-settings';
 
 	/**
+	 * Whether to warn that API keys are not yet available on every plan.
+	 *
+	 * TEMPORARY. Repagify is opening API keys to Free and Creator accounts,
+	 * with per-plan quotas doing the gating instead of a tier wall. The moment
+	 * that ships, set this to false — or delete this constant and
+	 * key_tier_notice() together, which are the only two places this claim is
+	 * made anywhere in the plugin.
+	 *
+	 * @var bool
+	 */
+	const KEY_TIER_NOTICE_ENABLED = true;
+
+	/**
 	 * Hooks the Settings API registration.
 	 *
 	 * @since 0.1.0
@@ -50,6 +63,12 @@ class Repagify_Settings {
 	 */
 	public static function init() {
 		add_action( 'admin_init', array( __CLASS__, 'register' ) );
+		add_action( 'admin_init', array( __CLASS__, 'seed_defaults' ) );
+
+		// A different key means a different account, so the cached plan and
+		// quota must not survive the change.
+		add_action( 'update_option_' . self::OPTION_NAME, array( __CLASS__, 'forget_account' ), 10, 2 );
+		add_action( 'add_option_' . self::OPTION_NAME, array( __CLASS__, 'forget_account' ) );
 	}
 
 	/**
@@ -69,18 +88,33 @@ class Repagify_Settings {
 	/**
 	 * Returns every setting, merged over the defaults.
 	 *
+	 * Never assumes the option row exists or is well formed. A site whose
+	 * activation hook never ran — the plugin dropped in over FTP, or activated
+	 * before the hook was added — has no row at all, and a half-written option
+	 * can hold nulls or nested arrays. Both cases resolve to the defaults here
+	 * rather than surfacing as notices further up.
+	 *
 	 * @since 0.1.0
 	 *
 	 * @return array
 	 */
 	public static function all() {
-		$stored = get_option( self::OPTION_NAME, array() );
+		$defaults = self::defaults();
+		$stored   = get_option( self::OPTION_NAME, array() );
 
 		if ( ! is_array( $stored ) ) {
 			$stored = array();
 		}
 
-		return wp_parse_args( $stored, self::defaults() );
+		$clean = array();
+
+		foreach ( $defaults as $key => $default ) {
+			$clean[ $key ] = ( isset( $stored[ $key ] ) && is_scalar( $stored[ $key ] ) )
+				? (string) $stored[ $key ]
+				: $default;
+		}
+
+		return $clean;
 	}
 
 	/**
@@ -154,6 +188,12 @@ class Repagify_Settings {
 	/**
 	 * Writes the default options if the plugin has never stored any.
 	 *
+	 * Runs from the activation hook and again on every admin_init. The second
+	 * call is the safety net: activation hooks only fire at the moment a plugin
+	 * is switched on, so a site that gained the plugin any other way would
+	 * otherwise never get a row. add_option() is a no-op once one exists, so
+	 * this cannot overwrite a saved key.
+	 *
 	 * @since 0.1.0
 	 *
 	 * @return void
@@ -162,6 +202,62 @@ class Repagify_Settings {
 		if ( false === get_option( self::OPTION_NAME, false ) ) {
 			add_option( self::OPTION_NAME, self::defaults() );
 		}
+	}
+
+	/**
+	 * Clears the cached account after the settings change.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @param mixed $old Previous option value. Unused for an add.
+	 * @param mixed $new New option value.
+	 * @return void
+	 */
+	public static function forget_account( $old = null, $new = null ) {
+		unset( $old, $new );
+
+		if ( class_exists( 'Repagify_Quota' ) ) {
+			Repagify_Quota::clear();
+		}
+	}
+
+	/**
+	 * The note explaining which plans can currently issue an API key.
+	 *
+	 * The single source of this claim. See KEY_TIER_NOTICE_ENABLED.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @return string Empty string once keys are available on every plan.
+	 */
+	public static function key_tier_notice() {
+		if ( ! self::KEY_TIER_NOTICE_ENABLED ) {
+			return '';
+		}
+
+		return __( 'API keys are currently available on Repagify Pro and Agency plans. Free and Creator support is coming soon.', 'repagify' );
+	}
+
+	/**
+	 * URL of the Repagify signup page.
+	 *
+	 * @since 0.3.0
+	 *
+	 * @return string
+	 */
+	public static function signup_url() {
+		return REPAGIFY_SIGNUP_URL;
+	}
+
+	/**
+	 * URL of this site's Repagify settings screen.
+	 *
+	 * @since 0.3.0
+	 *
+	 * @return string
+	 */
+	public static function settings_url() {
+		return admin_url( 'admin.php?page=' . self::PAGE );
 	}
 
 	/**
@@ -230,9 +326,10 @@ class Repagify_Settings {
 
 		$clean['api_key'] = $current['api_key'];
 
-		$submitted_key = isset( $input['api_key'] )
-			? trim( sanitize_text_field( wp_unslash( $input['api_key'] ) ) )
-			: '';
+		// Each field is forced to a scalar before anything is done with it: a
+		// crafted post can submit repagify_settings[api_url][] as an array, and
+		// PHP 8 makes passing that to a string function fatal.
+		$submitted_key = trim( sanitize_text_field( self::scalar( $input, 'api_key' ) ) );
 
 		if ( '' !== $submitted_key ) {
 			$clean['api_key'] = $submitted_key;
@@ -242,9 +339,7 @@ class Repagify_Settings {
 			$clean['api_key'] = '';
 		}
 
-		$submitted_url = isset( $input['api_url'] )
-			? esc_url_raw( trim( wp_unslash( $input['api_url'] ) ) )
-			: '';
+		$submitted_url = esc_url_raw( trim( self::scalar( $input, 'api_url' ) ) );
 
 		if ( '' === $submitted_url ) {
 			$clean['api_url'] = REPAGIFY_DEFAULT_API_URL;
@@ -253,6 +348,26 @@ class Repagify_Settings {
 		}
 
 		return $clean;
+	}
+
+	/**
+	 * Reads one submitted field as an unslashed string.
+	 *
+	 * Anything that is not a scalar — an array, an object, null — reads as an
+	 * empty string rather than being handed on to a string function.
+	 *
+	 * @since 0.3.0
+	 *
+	 * @param array  $input Submitted values.
+	 * @param string $key   Field to read.
+	 * @return string
+	 */
+	protected static function scalar( $input, $key ) {
+		if ( ! isset( $input[ $key ] ) || ! is_scalar( $input[ $key ] ) ) {
+			return '';
+		}
+
+		return (string) wp_unslash( $input[ $key ] );
 	}
 
 	/**
@@ -310,6 +425,15 @@ class Repagify_Settings {
 				<?php esc_html_e( 'Find your key in your Repagify account under Settings.', 'repagify' ); ?>
 			<?php endif; ?>
 		</p>
+
+		<?php $tier_notice = self::key_tier_notice(); ?>
+
+		<?php if ( '' !== $tier_notice ) : ?>
+			<p class="description repagify-key-tier-note">
+				<span class="dashicons dashicons-info-outline" aria-hidden="true"></span>
+				<?php echo esc_html( $tier_notice ); ?>
+			</p>
+		<?php endif; ?>
 		<?php
 	}
 

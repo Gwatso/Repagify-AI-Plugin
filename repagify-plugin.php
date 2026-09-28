@@ -3,12 +3,12 @@
  * Plugin Name:       Repagify
  * Plugin URI:        https://repagify.afriflare.com/
  * Description:       Connects your site to Repagify, an AI content repurposing platform. Turns published posts into SEO blog posts, LinkedIn posts, X threads and newsletters.
- * Version:           0.1.0
+ * Version:           0.5.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Afriflare
  * Author URI:        https://repagify.afriflare.com/
- * License:           GPL-2.0-or-later
+ * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       repagify
  * Domain Path:       /languages
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'REPAGIFY_VERSION', '0.1.0' );
+define( 'REPAGIFY_VERSION', '0.5.0' );
 define( 'REPAGIFY_FILE', __FILE__ );
 define( 'REPAGIFY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'REPAGIFY_URL', plugin_dir_url( __FILE__ ) );
@@ -30,8 +30,17 @@ define( 'REPAGIFY_URL', plugin_dir_url( __FILE__ ) );
  */
 define( 'REPAGIFY_DEFAULT_API_URL', 'https://repagify.afriflare.com/api/v1' );
 
+/**
+ * Where site owners without an account are sent to create a free one.
+ */
+define( 'REPAGIFY_SIGNUP_URL', 'https://repagify.afriflare.com/signup' );
+
 require_once REPAGIFY_PATH . 'includes/class-repagify-settings.php';
+require_once REPAGIFY_PATH . 'includes/class-repagify-formats.php';
+require_once REPAGIFY_PATH . 'includes/class-repagify-content.php';
 require_once REPAGIFY_PATH . 'includes/class-repagify-api.php';
+require_once REPAGIFY_PATH . 'includes/class-repagify-quota.php';
+require_once REPAGIFY_PATH . 'includes/class-repagify-scanner.php';
 
 if ( is_admin() ) {
 	require_once REPAGIFY_PATH . 'admin/class-repagify-admin.php';
