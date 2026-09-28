@@ -2,11 +2,9 @@ name: Release
 
 # Builds the distributable plugin zip and attaches it to the GitHub release.
 #
-# The zip this produces is what Repagify_Updater hands to WordPress, so its
-# shape matters: it must unpack to a single folder named repagify-plugin, which
-# is the directory the plugin installs into. GitHub's own auto-generated
-# "Source code (zip)" unpacks to Owner-Repo-<sha>/ and would install to the
-# wrong directory, which is why we attach our own.
+# The zip is produced by bin/build-zip.sh, the same script used locally. The
+# exclusion rules live in .distignore and are read only by that script, so CI
+# and a developer's machine cannot drift apart.
 
 on:
   push:
@@ -25,21 +23,18 @@ jobs:
       - name: Check out the tag
         uses: actions/checkout@v4
 
-      - name: Read the version from the tag and the plugin header
+      - name: Verify the tag, the Version header and the Stable tag agree
         id: version
         run: |
           TAG="${GITHUB_REF_NAME#v}"
           HEADER=$(grep -m1 -oP '^\s*\*\s*Version:\s*\K[0-9.]+' repagify-plugin.php)
           README=$(grep -m1 -oP '^Stable tag:\s*\K[0-9.]+' readme.txt)
 
-          echo "tag=$TAG"       >> "$GITHUB_OUTPUT"
-          echo "header=$HEADER" >> "$GITHUB_OUTPUT"
-          echo "readme=$README" >> "$GITHUB_OUTPUT"
-
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "Tag: $TAG / header: $HEADER / readme stable tag: $README"
 
-          # A mismatch here ships a plugin that reports the wrong version and
-          # will offer itself an update it has already installed.
+          # A mismatch ships a plugin that reports the wrong version and would
+          # offer itself an update it has already installed.
           if [ "$TAG" != "$HEADER" ]; then
             echo "::error::Tag v$TAG does not match the Version header ($HEADER) in repagify-plugin.php"
             exit 1
@@ -51,49 +46,34 @@ jobs:
           fi
 
       - name: Lint every PHP file
+        run: find . -name '*.php' -not -path './.git/*' -print0 | xargs -0 -n1 php -l
+
+      - name: Build the zip
+        # The single source of truth. The script reads .distignore, stages under
+        # the plugin slug, and refuses to produce an archive that is missing a
+        # required file or carrying an excluded one.
+        run: bash bin/build-zip.sh
+
+      - name: Confirm the archive is what we expect
         run: |
-          find . -name '*.php' -not -path './.git/*' -print0 \
-            | xargs -0 -n1 php -l
+          echo "Archive contents:"
+          unzip -l repagify-plugin.zip
 
-      - name: Stage the plugin under its install directory name
-        run: |
-          # The folder name inside the zip becomes the install directory, so it
-          # must be the plugin slug, not the repository name.
-          mkdir -p build/repagify-plugin
-          rsync -a --exclude-from=.distignore \
-                --exclude '.git' --exclude 'build' \
-                ./ build/repagify-plugin/
+          # Exactly one top-level folder, named for the install directory.
+          TOP=$(unzip -Z1 repagify-plugin.zip | cut -d/ -f1 | sort -u)
+          if [ "$TOP" != "repagify-plugin" ]; then
+            echo "::error::Expected a single top-level folder 'repagify-plugin', found: $TOP"
+            exit 1
+          fi
 
-          echo "Staged contents:"
-          find build/repagify-plugin -type f | sort
+          # Plugin Check reports every dotfile as hidden_files.
+          if unzip -Z1 repagify-plugin.zip | grep -E '(^|/)\.'; then
+            echo "::error::A dotfile reached the archive"
+            exit 1
+          fi
 
-      - name: Fail if anything excluded slipped into the build
-        run: |
-          cd build/repagify-plugin
-          FAILED=0
-          for unwanted in CLAUDE.md CONTRIBUTING.md .gitignore .distignore .gitattributes assets .github tests; do
-            if [ -e "$unwanted" ]; then
-              echo "::error::$unwanted should not be in the distributed zip"
-              FAILED=1
-            fi
-          done
-
-          # And the things that must be there.
-          for required in repagify-plugin.php readme.txt uninstall.php LICENSE languages/repagify.pot; do
-            if [ ! -e "$required" ]; then
-              echo "::error::$required is missing from the distributed zip"
-              FAILED=1
-            fi
-          done
-
-          exit $FAILED
-
-      - name: Create the zip
-        run: |
-          cd build
-          zip -r "../repagify-plugin-${{ steps.version.outputs.tag }}.zip" repagify-plugin -x '*.DS_Store'
-          cd ..
-          unzip -l "repagify-plugin-${{ steps.version.outputs.tag }}.zip"
+      - name: Name the archive for the release
+        run: mv repagify-plugin.zip "repagify-plugin-${{ steps.version.outputs.tag }}.zip"
 
       - name: Attach the zip to the release
         uses: softprops/action-gh-release@v2

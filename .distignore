@@ -4,6 +4,15 @@
 # user's server. The WP.org directory listing assets in assets/ are published
 # from the repository's own assets/ folder, never from the plugin package.
 
+# Every dotfile and dot-directory, at any depth.
+#
+# This single rule is what actually keeps .gitattributes, .gitignore,
+# .distignore, .github, .vscode, .idea, .DS_Store, .editorconfig and anything
+# else beginning with a dot out of the package. Plugin Check reports every one
+# of them as hidden_files, so the rule is deliberately broad rather than a list
+# that has to be remembered. The named entries below are documentation.
+.*
+
 # Version control
 .git
 .gitignore
@@ -36,6 +45,9 @@ package.json
 package-lock.json
 node_modules/
 vendor/
+
+# The build tooling itself, which has no business on a user's server.
+/bin/
 
 # Build output and scratch
 .dist/

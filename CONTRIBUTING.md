@@ -123,6 +123,66 @@ Regenerate the translation template after changing any string:
 wp i18n make-pot . languages/repagify-plugin.pot
 ```
 
+## Building the distribution zip
+
+`bin/build-zip.sh` produces `repagify-plugin.zip`, exactly what would be
+submitted to WordPress.org. It is the single source of truth for what ships:
+the release workflow calls this same script rather than repeating the rules, so
+CI and your machine cannot disagree.
+
+```
+bash bin/build-zip.sh          # build the zip
+bash bin/build-zip.sh --list   # print the file list, build nothing
+```
+
+Exclusions come from `.distignore` and nowhere else. The script refuses to
+produce an archive that is missing a required file, carrying a dotfile, or
+carrying anything from the excluded list.
+
+Two things about `.distignore` worth knowing before editing it:
+
+- A pattern without a leading slash matches a path segment **at any depth**.
+  `assets/` therefore also matches `admin/assets/`, which once silently
+  stripped the plugin's CSS and JavaScript out of the release. Anchor anything
+  that should only apply at the root, as `/assets/` does.
+- The `.*` rule near the top is what actually keeps dotfiles out. The named
+  entries beneath it are documentation.
+
+## Running Plugin Check
+
+**Run Plugin Check against the built zip, never against the repository
+folder.** Checking the working directory always reports errors that do not
+exist in the distributed plugin:
+
+| Finding | Why it appears | In the zip |
+| --- | --- | --- |
+| `hidden_files` | `.gitignore`, `.gitattributes`, `.distignore` | absent |
+| `github_directory` | `.github/` | absent |
+| `unexpected_markdown_file` | `CLAUDE.md`, `CONTRIBUTING.md` | absent |
+
+To check the real artefact:
+
+1. `bash bin/build-zip.sh`
+2. In WordPress admin, go to **Tools → Plugin Check**
+3. Choose **Check an uploaded plugin** and upload `repagify-plugin.zip`
+
+Or unzip it into a scratch WordPress install's `wp-content/plugins/` and check
+it there. The folder must keep the name `repagify-plugin`, because Plugin Check
+derives both the plugin slug and the expected text domain from the folder name
+— rename it and you will get a false `TextDomainMismatch` on every string.
+
+### What is expected to remain
+
+Two findings are known and deliberate:
+
+- **`plugin_updater_detected`** — the `Update URI` header, which routes update
+  checks to GitHub releases until the plugin is hosted on WordPress.org. It
+  must be removed at submission; the reason is spelled out at the top of
+  `repagify-plugin.php`.
+- **`trademarked_term`** — the slug `repagify-plugin` contains the restricted
+  word "plugin". Resolving this means renaming the folder, the repository and
+  the text domain to `repagify`.
+
 ## Pull requests
 
 - One concern per pull request.
