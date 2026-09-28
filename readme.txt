@@ -4,7 +4,7 @@ Tags: content, repurposing, seo, social media, ai
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,13 @@ In your site's options table. It is never written to logs, never included in err
 
 == Changelog ==
 
+= 0.6.0 =
+* Settings and Dashboard links in the Plugins list, with a matching set on the network plugins screen for multisite.
+* Documentation, Support and Report an issue links under the plugin's own row.
+* View details now opens a real modal, populated from readme.txt rather than a second copy of the same text kept in code.
+* Updates are served from GitHub releases until the plugin is hosted on WordPress.org, which is what makes the Enable auto-updates control appear. Auto-updates are never switched on for you.
+* Release builds are produced by a workflow that verifies the tag, the Version header and the Stable tag all agree before publishing.
+
 = 0.5.0 =
 * Compliance pass for the WordPress.org directory: full GPL-2.0 licence text, a complete external services disclosure, a translation template, and repository hygiene files.
 * Escaped two output statements that were safe but unescaped.
@@ -175,6 +182,9 @@ In your site's options table. It is never written to logs, never included in err
 * Connection test that reports your plan tier and remaining conversions.
 
 == Upgrade Notice ==
+
+= 0.6.0 =
+Adds Plugins list links, a working View details modal, and updates served from GitHub releases so auto-updates can be enabled.
 
 = 0.5.0 =
 Licensing, disclosure and translation housekeeping. No functional change.

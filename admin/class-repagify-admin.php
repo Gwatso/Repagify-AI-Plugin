@@ -75,10 +75,15 @@ class Repagify_Admin {
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'register_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_filter(
-			'plugin_action_links_' . plugin_basename( REPAGIFY_FILE ),
-			array( $this, 'add_action_links' )
-		);
+		$basename = plugin_basename( REPAGIFY_FILE );
+
+		add_filter( 'plugin_action_links_' . $basename, array( $this, 'add_action_links' ) );
+
+		// On multisite the plugin can also be managed from the network screen,
+		// where the same links are wanted but the surrounding markup differs.
+		add_filter( 'network_admin_plugin_action_links_' . $basename, array( $this, 'add_network_action_links' ) );
+
+		add_filter( 'plugin_row_meta', array( $this, 'add_row_meta' ), 10, 2 );
 
 		add_action( 'wp_ajax_repagify_test_connection', array( $this, 'ajax_test_connection' ) );
 		add_action( 'wp_ajax_repagify_scan_batch', array( $this, 'ajax_scan_batch' ) );
@@ -131,7 +136,10 @@ class Repagify_Admin {
 	}
 
 	/**
-	 * Adds Dashboard and Settings shortcuts to the plugin list row.
+	 * Adds Settings and Dashboard before Deactivate in the plugins list.
+	 *
+	 * WordPress convention puts a plugin's own links first and leaves the core
+	 * Deactivate and Delete links at the end, so these are prepended.
 	 *
 	 * @since 0.1.0
 	 *
@@ -143,20 +151,85 @@ class Repagify_Admin {
 			return $links;
 		}
 
-		$own = array(
+		return array_merge( $this->own_action_links(), $links );
+	}
+
+	/**
+	 * The same links on the network plugins screen.
+	 *
+	 * Both Repagify screens live on the site admin rather than the network
+	 * admin, so the links point there. A network administrator following one
+	 * lands on the main site's dashboard, which is where the settings for this
+	 * plugin actually are.
+	 *
+	 * @since 0.6.0
+	 *
+	 * @param string[] $links Existing action links.
+	 * @return string[]
+	 */
+	public function add_network_action_links( $links ) {
+		if ( ! current_user_can( 'manage_network_plugins' ) ) {
+			return $links;
+		}
+
+		return array_merge( $this->own_action_links(), $links );
+	}
+
+	/**
+	 * Builds the plugin's own action links, in the order they are shown.
+	 *
+	 * @since 0.6.0
+	 *
+	 * @return string[]
+	 */
+	protected function own_action_links() {
+		return array(
+			sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( Repagify_Settings::settings_url() ),
+				esc_html__( 'Settings', 'repagify' )
+			),
 			sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( admin_url( 'admin.php?page=' . self::DASHBOARD_PAGE ) ),
 				esc_html__( 'Dashboard', 'repagify' )
 			),
-			sprintf(
-				'<a href="%s">%s</a>',
-				esc_url( admin_url( 'admin.php?page=' . Repagify_Settings::PAGE ) ),
-				esc_html__( 'Settings', 'repagify' )
-			),
+		);
+	}
+
+	/**
+	 * Adds documentation and support links under this plugin's row.
+	 *
+	 * Runs for every plugin on the screen, so the file is checked before
+	 * anything is added. Adding rows to somebody else's plugin would be rude
+	 * and is a review concern.
+	 *
+	 * @since 0.6.0
+	 *
+	 * @param string[] $meta        Existing meta row links.
+	 * @param string   $plugin_file Plugin file the row belongs to.
+	 * @return string[]
+	 */
+	public function add_row_meta( $meta, $plugin_file ) {
+		if ( plugin_basename( REPAGIFY_FILE ) !== $plugin_file ) {
+			return $meta;
+		}
+
+		$links = array(
+			'https://repagify.afriflare.com/api-access' => __( 'Documentation', 'repagify' ),
+			'https://repagify.afriflare.com/help'       => __( 'Support', 'repagify' ),
+			'https://github.com/Gwatso/Repagify-AI-Plugin/issues' => __( 'Report an issue', 'repagify' ),
 		);
 
-		return array_merge( $own, $links );
+		foreach ( $links as $url => $label ) {
+			$meta[] = sprintf(
+				'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+				esc_url( $url ),
+				esc_html( $label )
+			);
+		}
+
+		return $meta;
 	}
 
 	/**

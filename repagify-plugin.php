@@ -1,17 +1,35 @@
 <?php
 /**
  * Plugin Name:       Repagify
- * Plugin URI:        https://repagify.afriflare.com/
- * Description:       Connects your site to Repagify, an AI content repurposing platform. Turns published posts into SEO blog posts, LinkedIn posts, X threads and newsletters.
- * Version:           0.5.0
+ * Plugin URI:        https://github.com/Gwatso/Repagify-AI-Plugin
+ * Description:       Finds the dormant posts in your archive worth reusing, then turns the best of them into blog posts, LinkedIn posts, X threads and newsletters.
+ * Version:           0.6.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Afriflare
- * Author URI:        https://repagify.afriflare.com/
+ * Author URI:        https://repagify.afriflare.com
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       repagify
  * Domain Path:       /languages
+ * Update URI:        https://github.com/Gwatso/Repagify-AI-Plugin
+ *
+ * ---------------------------------------------------------------------------
+ * REMOVE THE "Update URI" HEADER ABOVE ONCE THIS PLUGIN IS ACCEPTED INTO THE
+ * WORDPRESS.ORG DIRECTORY.
+ *
+ * While the header is present, WordPress routes update checks to
+ * update_plugins_github.com (see includes/class-repagify-updater.php) and will
+ * NOT accept updates from WordPress.org for this plugin. That is exactly what
+ * the header is for: it stops the directory serving updates for a plugin whose
+ * slug it does not own. The moment the plugin is hosted on WordPress.org, the
+ * directory becomes the correct and canonical update source, and leaving this
+ * header in place would permanently block every official update.
+ *
+ * Removing the header is sufficient on its own — Repagify_Updater only ever
+ * hooks a filter keyed on the header's hostname, so it becomes inert. Deleting
+ * the updater class as well is tidier but not required.
+ * ---------------------------------------------------------------------------
  *
  * @package Repagify
  */
@@ -20,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'REPAGIFY_VERSION', '0.5.0' );
+define( 'REPAGIFY_VERSION', '0.6.0' );
 define( 'REPAGIFY_FILE', __FILE__ );
 define( 'REPAGIFY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'REPAGIFY_URL', plugin_dir_url( __FILE__ ) );
@@ -41,6 +59,8 @@ require_once REPAGIFY_PATH . 'includes/class-repagify-content.php';
 require_once REPAGIFY_PATH . 'includes/class-repagify-api.php';
 require_once REPAGIFY_PATH . 'includes/class-repagify-quota.php';
 require_once REPAGIFY_PATH . 'includes/class-repagify-scanner.php';
+require_once REPAGIFY_PATH . 'includes/class-repagify-readme.php';
+require_once REPAGIFY_PATH . 'includes/class-repagify-updater.php';
 
 if ( is_admin() ) {
 	require_once REPAGIFY_PATH . 'admin/class-repagify-admin.php';
@@ -59,6 +79,10 @@ function repagify_bootstrap() {
 	if ( is_admin() ) {
 		$admin = new Repagify_Admin();
 		$admin->init();
+
+		// Update checks belong to the admin only. The class hooks nothing at
+		// all on a front-end request.
+		Repagify_Updater::init();
 	}
 }
 add_action( 'plugins_loaded', 'repagify_bootstrap' );

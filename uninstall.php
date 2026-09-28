@@ -27,6 +27,8 @@ function repagify_uninstall_site() {
 	delete_transient( 'repagify_scan_cache' );
 	delete_transient( 'repagify_account_cache' );
 	delete_transient( 'repagify_account_failure' );
+	delete_transient( 'repagify_latest_release' );
+	delete_transient( 'repagify_release_failure' );
 	delete_post_meta_by_key( '_repagify_converted' );
 }
 
