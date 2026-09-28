@@ -9,8 +9,8 @@ repository, as a sibling of `/trunk/` and `/tags/`. If you deploy with
 [10up/action-wordpress-plugin-deploy](https://github.com/10up/action-wordpress-plugin-deploy),
 this folder is copied there for you.
 
-**Nothing here has been generated.** Every file below still needs to be
-produced by a designer and committed.
+The banners and icons are supplied and committed. The four screenshots are
+still outstanding — see the status list at the bottom.
 
 ## Required files
 
@@ -71,15 +71,21 @@ under the wrong image.
 
 ## Current status
 
-- [ ] `banner-1544x500.png`
-- [ ] `banner-772x250.png`
-- [ ] `icon-256x256.png`
-- [ ] `icon-128x128.png`
-- [ ] `screenshot-1.png`
-- [ ] `screenshot-2.png`
-- [ ] `screenshot-3.png`
-- [ ] `screenshot-4.png`
+- [x] `banner-1544x500.png` — 1544x500, committed
+- [x] `banner-772x250.png` — 772x250, committed
+- [x] `icon-256x256.png` — 256x256, committed
+- [x] `icon-128x128.png` — 128x128, committed
+- [ ] `screenshot-1.png` — the opportunity dashboard
+- [ ] `screenshot-2.png` — the generate dialog, mid-choice
+- [ ] `screenshot-3.png` — a finished generation
+- [ ] `screenshot-4.png` — the settings screen
 
-The plugin can be submitted without these — WP.org will show a generic
-placeholder icon and no banner. They should be in place before any real
-promotion, since a listing with no icon reads as abandoned.
+The plugin can be submitted as it stands: the icon and banner are in place, so
+the listing will not look abandoned. The four screenshots are the remaining
+gap, and `readme.txt` already carries their captions — WP.org simply shows no
+image for a caption whose file is missing, so adding them later needs no
+readme change.
+
+Note that screenshot 1 should not be captured from a site with a single
+"Hello world" post. Use an archive with twenty or more posts of varied length
+so the score badges show a real spread.

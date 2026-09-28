@@ -1,0 +1,24 @@
+# Normalise line endings so the repository stays LF regardless of who commits.
+# Without this, a Windows checkout writes CRLF back into the repo and every
+# contributor on macOS or Linux sees whole files as changed.
+* text=auto eol=lf
+
+# Binary assets must never be touched.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+
+# Keep repository furniture out of the GitHub language statistics and
+# out of any archive GitHub generates.
+/assets/         export-ignore
+/.github/        export-ignore
+/.gitattributes  export-ignore
+/.gitignore      export-ignore
+/.distignore     export-ignore
+/CLAUDE.md       export-ignore
+/CONTRIBUTING.md export-ignore

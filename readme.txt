@@ -2,7 +2,7 @@
 Contributors: afriflare
 Tags: content, repurposing, seo, social media, ai
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 0.5.0
 License: GPLv2 or later
@@ -44,7 +44,7 @@ Repagify plans include different numbers of generations. Free accounts include a
 
 Repagify is free software, licensed GPLv2 or later. Development happens in the open and patches are welcome — see CONTRIBUTING.md in the repository.
 
-Source code: https://github.com/afriflare/repagify-plugin *(replace with the real repository URL before submission)*
+Source code: https://github.com/Gwatso/Repagify-AI-Plugin
 
 == External services ==
 
