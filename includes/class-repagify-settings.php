@@ -235,7 +235,7 @@ class Repagify_Settings {
 			return '';
 		}
 
-		return __( 'API keys are currently available on Repagify Pro and Agency plans. Free and Creator support is coming soon.', 'repagify' );
+		return __( 'Repagify currently issues API keys on its Pro and Agency plans, with Free and Creator support on the way. That is the service’s own policy about its API. The plugin’s scanner and dashboard work with no key at all.', 'repagify' );
 	}
 
 	/**

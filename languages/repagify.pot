@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-28T12:01:27Z\n"
+"POT-Creation-Date: 2026-09-28T13:43:44Z\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: repagify-makepot\n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "%s words"
 msgstr ""
 
-#: admin/class-repagify-admin.php:226
+#: admin/class-repagify-admin.php:299
 msgid "%s words generated."
 msgstr ""
 
@@ -67,11 +67,11 @@ msgstr ""
 msgid "%s words on average"
 msgstr ""
 
-#: admin/class-repagify-admin.php:222
+#: admin/class-repagify-admin.php:295
 msgid "%s words will be sent to Repagify."
 msgstr ""
 
-#: admin/class-repagify-admin.php:482
+#: admin/class-repagify-admin.php:555
 msgid "(no title)"
 msgstr ""
 
@@ -83,9 +83,9 @@ msgstr ""
 msgid ", "
 msgstr ""
 
-#. translators: %s: the plan's generation cap.
+#. translators: %s: the account's generation allowance.
 #: includes/class-repagify-quota.php:348
-msgid "0 of %s — upgrade to continue"
+msgid "0 of %s generations remaining"
 msgstr ""
 
 #: includes/class-repagify-settings.php:300
@@ -94,10 +94,6 @@ msgstr ""
 
 #: includes/class-repagify-settings.php:291
 msgid "API key"
-msgstr ""
-
-#: includes/class-repagify-settings.php:238
-msgid "API keys are currently available on Repagify Pro and Agency plans. Free and Creator support is coming soon."
 msgstr ""
 
 #: admin/views/dashboard.php:291
@@ -160,19 +156,18 @@ msgstr ""
 msgid "Checks that the saved key can reach the Repagify API and reads back your plan. Save your settings first."
 msgstr ""
 
-#: admin/class-repagify-admin.php:641
+#: admin/class-repagify-admin.php:714
 msgid "Choose an output format."
 msgstr ""
 
-#: admin/class-repagify-admin.php:230
+#: admin/class-repagify-admin.php:303
 #: admin/views/dashboard.php:675
 #: admin/views/dashboard.php:764
 #: admin/views/dashboard.php:784
 msgid "Close"
 msgstr ""
 
-#: admin/class-repagify-admin.php:231
-#: admin/views/dashboard.php:616
+#: admin/class-repagify-admin.php:304
 msgid "Connect a Repagify account on the settings screen to generate content."
 msgstr ""
 
@@ -180,7 +175,7 @@ msgstr ""
 msgid "Connected"
 msgstr ""
 
-#: admin/class-repagify-admin.php:930
+#: admin/class-repagify-admin.php:1003
 msgid "Connected to Repagify."
 msgstr ""
 
@@ -200,24 +195,24 @@ msgstr ""
 msgid "Conversational"
 msgstr ""
 
-#: admin/class-repagify-admin.php:212
+#: admin/class-repagify-admin.php:285
 msgid "Conversions remaining"
 msgstr ""
 
-#: admin/class-repagify-admin.php:213
+#: admin/class-repagify-admin.php:286
 msgid "Conversions used"
 msgstr ""
 
-#: admin/class-repagify-admin.php:227
+#: admin/class-repagify-admin.php:300
 msgid "Copied"
 msgstr ""
 
-#: admin/class-repagify-admin.php:229
+#: admin/class-repagify-admin.php:302
 #: admin/views/dashboard.php:758
 msgid "Copy to clipboard"
 msgstr ""
 
-#: admin/class-repagify-admin.php:228
+#: admin/class-repagify-admin.php:301
 msgid "Could not copy automatically. Select the text and copy it."
 msgstr ""
 
@@ -234,13 +229,17 @@ msgstr ""
 msgid "Creator"
 msgstr ""
 
-#: admin/class-repagify-admin.php:112
-#: admin/class-repagify-admin.php:150
+#: admin/class-repagify-admin.php:117
+#: admin/class-repagify-admin.php:195
 msgid "Dashboard"
 msgstr ""
 
 #: includes/class-repagify-settings.php:422
 msgid "Delete the saved key"
+msgstr ""
+
+#: admin/class-repagify-admin.php:219
+msgid "Documentation"
 msgstr ""
 
 #: admin/views/dashboard.php:521
@@ -251,8 +250,8 @@ msgstr ""
 msgid "Enter a new key to replace the saved one"
 msgstr ""
 
-#: admin/views/dashboard.php:117
-msgid "Everything on this page — the scan, the scores, the opportunities — runs on your own server and needs no connection. To turn a post into a blog post, LinkedIn post, X thread or newsletter, connect a free Repagify account."
+#: admin/views/dashboard.php:114
+msgid "Everything on this page works without an account. Generation runs on the Repagify service."
 msgstr ""
 
 #: admin/views/dashboard.php:402
@@ -265,6 +264,10 @@ msgstr ""
 
 #: admin/views/dashboard.php:324
 msgid "Filter by post type"
+msgstr ""
+
+#: includes/class-repagify-readme.php:99
+msgid "Find the dormant posts in your archive worth reusing, then turn the best of them into blog posts, LinkedIn posts, X threads and newsletters."
 msgstr ""
 
 #: includes/class-repagify-settings.php:425
@@ -287,16 +290,20 @@ msgstr ""
 msgid "Generate another format"
 msgstr ""
 
-#: admin/views/dashboard.php:637
-msgid "Generating content needs a connected Repagify account. Scanning and scoring work without one."
-msgstr ""
-
-#: admin/class-repagify-admin.php:218
+#: admin/class-repagify-admin.php:291
 msgid "Generating…"
 msgstr ""
 
 #: includes/class-repagify-quota.php:393
 msgid "Generation could not be completed"
+msgstr ""
+
+#: admin/views/dashboard.php:637
+msgid "Generation is carried out by the Repagify web service, so it needs a connected account. Everything else on this page works without one."
+msgstr ""
+
+#: admin/views/dashboard.php:616
+msgid "Generation is performed by the Repagify web service. Connect an account on the settings screen to use it."
 msgstr ""
 
 #: includes/class-repagify-quota.php:397
@@ -347,14 +354,14 @@ msgid "No posts match these filters. Try widening the date range or clearing the
 msgstr ""
 
 #: admin/views/dashboard.php:239
-msgid "Not connected — scanning works offline, connect an account to generate"
+msgid "Not connected — scanning and scoring work offline; connect a Repagify account to generate"
 msgstr ""
 
 #: admin/views/dashboard.php:139
 msgid "Nothing to scan yet"
 msgstr ""
 
-#: admin/class-repagify-admin.php:840
+#: admin/class-repagify-admin.php:913
 msgid "Only published posts can be repurposed."
 msgstr ""
 
@@ -377,7 +384,7 @@ msgstr ""
 msgid "Paste your Repagify API key"
 msgstr ""
 
-#: admin/class-repagify-admin.php:211
+#: admin/class-repagify-admin.php:284
 msgid "Plan"
 msgstr ""
 
@@ -405,7 +412,7 @@ msgstr ""
 msgid "Published posts ranked by repurposing potential."
 msgstr ""
 
-#: admin/class-repagify-admin.php:220
+#: admin/class-repagify-admin.php:293
 msgid "Reading the post…"
 msgstr ""
 
@@ -413,8 +420,8 @@ msgstr ""
 msgid "Ready to work again"
 msgstr ""
 
-#: admin/class-repagify-admin.php:98
-#: admin/class-repagify-admin.php:99
+#: admin/class-repagify-admin.php:103
+#: admin/class-repagify-admin.php:104
 msgid "Repagify"
 msgstr ""
 
@@ -422,7 +429,11 @@ msgstr ""
 msgid "Repagify could not use this content. It may be too short, too long, or not text it can work with."
 msgstr ""
 
-#: admin/class-repagify-admin.php:111
+#: includes/class-repagify-settings.php:238
+msgid "Repagify currently issues API keys on its Pro and Agency plans, with Free and Creator support on the way. That is the service’s own policy about its API. The plugin’s scanner and dashboard work with no key at all."
+msgstr ""
+
+#: admin/class-repagify-admin.php:116
 msgid "Repagify dashboard"
 msgstr ""
 
@@ -463,7 +474,7 @@ msgstr ""
 msgid "Repagify rejected the saved API key — it is invalid or has been revoked. Paste a current key on the settings screen and save."
 msgstr ""
 
-#: admin/class-repagify-admin.php:699
+#: admin/class-repagify-admin.php:772
 msgid "Repagify replied without any content. Nothing was saved — try again."
 msgstr ""
 
@@ -471,12 +482,20 @@ msgstr ""
 msgid "Repagify returned a response this plugin could not read. Check the API base URL on the settings screen."
 msgstr ""
 
-#: admin/class-repagify-admin.php:120
+#: includes/class-repagify-readme.php:104
+msgid "Repagify scans your published archive entirely on your own server, scores every post for repurposing potential, and turns the ones worth reusing into blog posts, LinkedIn posts, X threads and newsletters. Scanning needs no account; generating needs a free Repagify account."
+msgstr ""
+
+#: admin/class-repagify-admin.php:125
 msgid "Repagify settings"
 msgstr ""
 
 #: admin/views/settings.php:22
 msgid "Repagify turns posts you have already published into SEO blog posts, LinkedIn posts, X threads and newsletters. Connect your account below to get started."
+msgstr ""
+
+#: admin/class-repagify-admin.php:221
+msgid "Report an issue"
 msgstr ""
 
 #: admin/views/dashboard.php:611
@@ -520,12 +539,12 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
-#: admin/class-repagify-admin.php:216
+#: admin/class-repagify-admin.php:289
 msgid "Scan complete. Loading your opportunities…"
 msgstr ""
 
 #. translators: 1: posts scanned, 2: posts in total.
-#: admin/class-repagify-admin.php:215
+#: admin/class-repagify-admin.php:288
 #: admin/views/dashboard.php:190
 msgid "Scanned %1$s of %2$s posts."
 msgstr ""
@@ -533,10 +552,6 @@ msgstr ""
 #. translators: %s: human-readable time difference, such as "5 mins".
 #: admin/views/dashboard.php:653
 msgid "Scanned %s ago. Results are cached for an hour; use Rescan content to refresh them now."
-msgstr ""
-
-#: admin/views/dashboard.php:114
-msgid "Scanning works offline. Generating needs an account."
 msgstr ""
 
 #: admin/views/dashboard.php:164
@@ -547,8 +562,8 @@ msgstr ""
 msgid "Score"
 msgstr ""
 
-#: admin/class-repagify-admin.php:121
-#: admin/class-repagify-admin.php:155
+#: admin/class-repagify-admin.php:126
+#: admin/class-repagify-admin.php:190
 #: admin/views/dashboard.php:242
 msgid "Settings"
 msgstr ""
@@ -557,12 +572,16 @@ msgstr ""
 msgid "Show more details"
 msgstr ""
 
-#: admin/class-repagify-admin.php:210
+#: admin/class-repagify-admin.php:283
 msgid "Something went wrong. Please try again."
 msgstr ""
 
 #: admin/views/dashboard.php:81
 msgid "Status"
+msgstr ""
+
+#: admin/class-repagify-admin.php:220
+msgid "Support"
 msgstr ""
 
 #: admin/views/dashboard.php:714
@@ -574,7 +593,7 @@ msgstr ""
 msgid "Test connection"
 msgstr ""
 
-#: admin/class-repagify-admin.php:209
+#: admin/class-repagify-admin.php:282
 msgid "Testing…"
 msgstr ""
 
@@ -587,7 +606,7 @@ msgstr ""
 msgid "That is not an output format Repagify can produce."
 msgstr ""
 
-#: admin/class-repagify-admin.php:825
+#: admin/class-repagify-admin.php:898
 #: includes/class-repagify-content.php:55
 msgid "That post could not be found."
 msgstr ""
@@ -597,8 +616,12 @@ msgstr ""
 msgid "That’s %s words of dormant content."
 msgstr ""
 
-#: admin/class-repagify-admin.php:217
+#: admin/class-repagify-admin.php:290
 msgid "The scan could not finish. Reload this page to try again."
+msgstr ""
+
+#: admin/views/dashboard.php:117
+msgid "The scan, the scores and the opportunities all run on your own server and need no connection. Turning a post into a blog post, LinkedIn post, X thread or newsletter is computation done by Repagify, a separate web service, so that step needs an account with them. Connecting one is optional."
 msgstr ""
 
 #. translators: %s: minimum number of characters.
@@ -606,7 +629,15 @@ msgstr ""
 msgid "There is not enough text to repurpose. Repagify needs at least %s characters."
 msgstr ""
 
-#: admin/class-repagify-admin.php:224
+#: includes/class-repagify-quota.php:406
+msgid "This account has used all 20 generations its Repagify Creator plan includes this month. The service’s Pro plan includes unlimited generations, a more capable model, and brand voice matching for $19."
+msgstr ""
+
+#: includes/class-repagify-quota.php:416
+msgid "This account has used both of the free generations its Repagify plan includes. Generation is performed by the Repagify web service, whose Creator plan includes 20 generations a month for $9."
+msgstr ""
+
+#: admin/class-repagify-admin.php:297
 msgid "This post is longer than Repagify can convert at once, so only the first %1$s characters of %2$s will be used. You may want to split it into parts and repurpose each one."
 msgstr ""
 
@@ -620,7 +651,7 @@ msgstr ""
 msgid "This site has %s published posts, so the scan runs in batches to stay well inside your server limits. It only has to run once an hour."
 msgstr ""
 
-#: admin/class-repagify-admin.php:219
+#: admin/class-repagify-admin.php:292
 #: admin/views/dashboard.php:747
 msgid "This usually takes 20 to 45 seconds. Leave this window open."
 msgstr ""
@@ -649,7 +680,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: admin/class-repagify-admin.php:983
+#: admin/class-repagify-admin.php:1056
 msgid "Unlimited"
 msgstr ""
 
@@ -657,16 +688,16 @@ msgstr ""
 msgid "Unlimited generations"
 msgstr ""
 
+#: admin/views/dashboard.php:529
+msgid "View"
+msgstr ""
+
 #: includes/class-repagify-quota.php:419
-msgid "Upgrade to Creator"
+msgid "View Repagify Creator plan"
 msgstr ""
 
 #: includes/class-repagify-quota.php:409
-msgid "Upgrade to Pro"
-msgstr ""
-
-#: admin/views/dashboard.php:529
-msgid "View"
+msgid "View Repagify Pro plan"
 msgstr ""
 
 #: admin/views/dashboard.php:151
@@ -693,25 +724,25 @@ msgstr ""
 msgid "X thread"
 msgstr ""
 
-#: admin/class-repagify-admin.php:574
-#: admin/class-repagify-admin.php:814
-#: admin/class-repagify-admin.php:912
+#: admin/class-repagify-admin.php:647
+#: admin/class-repagify-admin.php:887
+#: admin/class-repagify-admin.php:985
 msgid "You do not have permission to do that."
 msgstr ""
 
-#: admin/class-repagify-admin.php:300
+#: admin/class-repagify-admin.php:373
 msgid "You do not have permission to manage these settings."
 msgstr ""
 
-#: admin/class-repagify-admin.php:833
+#: admin/class-repagify-admin.php:906
 msgid "You do not have permission to repurpose that post."
 msgstr ""
 
-#: admin/class-repagify-admin.php:259
+#: admin/class-repagify-admin.php:332
 msgid "You do not have permission to rescan this site."
 msgstr ""
 
-#: admin/class-repagify-admin.php:285
+#: admin/class-repagify-admin.php:358
 msgid "You do not have permission to view this page."
 msgstr ""
 
@@ -721,41 +752,33 @@ msgid_plural "You have %s published posts."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-repagify-quota.php:406
-msgid "You have used all 20 generations this month. Repagify Pro gives you unlimited generations, a more capable model, and brand voice matching for $19."
-msgstr ""
-
-#: includes/class-repagify-quota.php:416
-msgid "You have used both free generations. Repagify Creator gives you 20 per month for $9."
-msgstr ""
-
 #: includes/class-repagify-api.php:326
 msgid "You have used every conversion on your Repagify plan."
 msgstr ""
 
-#: includes/class-repagify-quota.php:405
-msgid "You have used this month’s generations"
-msgstr ""
-
 #: includes/class-repagify-quota.php:415
-msgid "You have used your free generations"
+msgid "Your Repagify account has no generations left"
 msgstr ""
 
-#: admin/views/dashboard.php:107
-msgid "Your archive has been rescanned."
+#: includes/class-repagify-quota.php:405
+msgid "Your Repagify account has no generations left this month"
 msgstr ""
 
 #: includes/class-repagify-quota.php:446
-msgid "Your limit resets at the start of next month."
+msgid "Your Repagify allowance resets at the start of next month."
 msgstr ""
 
 #. translators: %s: date the generation allowance resets.
 #: includes/class-repagify-quota.php:440
-msgid "Your limit resets on %s."
+msgid "Your Repagify allowance resets on %s."
 msgstr ""
 
 #: includes/class-repagify-quota.php:396
-msgid "Your plan includes unlimited generations, so this limit should not apply to your account. Nothing was charged and nothing on your site changed."
+msgid "Your Repagify plan includes unlimited generations, so this limit should not apply to your account. Nothing was charged and nothing on your site changed."
+msgstr ""
+
+#: admin/views/dashboard.php:107
+msgid "Your archive has been rescanned."
 msgstr ""
 
 #: includes/class-repagify-scanner.php:645

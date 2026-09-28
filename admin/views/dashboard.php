@@ -111,10 +111,10 @@ $repagify_sortable = array( 'word_count', 'date', 'score' );
 	<?php if ( ! $repagify_has_key && $repagify_total > 0 ) : ?>
 		<div class="notice notice-info is-dismissible repagify-connect-notice">
 			<p>
-				<strong><?php esc_html_e( 'Scanning works offline. Generating needs an account.', 'repagify' ); ?></strong>
+				<strong><?php esc_html_e( 'Everything on this page works without an account. Generation runs on the Repagify service.', 'repagify' ); ?></strong>
 			</p>
 			<p>
-				<?php esc_html_e( 'Everything on this page — the scan, the scores, the opportunities — runs on your own server and needs no connection. To turn a post into a blog post, LinkedIn post, X thread or newsletter, connect a free Repagify account.', 'repagify' ); ?>
+				<?php esc_html_e( 'The scan, the scores and the opportunities all run on your own server and need no connection. Turning a post into a blog post, LinkedIn post, X thread or newsletter is computation done by Repagify, a separate web service, so that step needs an account with them. Connecting one is optional.', 'repagify' ); ?>
 			</p>
 			<p>
 				<a
@@ -236,7 +236,7 @@ $repagify_sortable = array( 'word_count', 'date', 'score' );
 			<?php if ( ! $repagify_has_key ) : ?>
 				<span class="repagify-status-dot" aria-hidden="true"></span>
 				<span class="repagify-status-text">
-					<?php esc_html_e( 'Not connected — scanning works offline, connect an account to generate', 'repagify' ); ?>
+					<?php esc_html_e( 'Not connected — scanning and scoring work offline; connect a Repagify account to generate', 'repagify' ); ?>
 				</span>
 				<a href="<?php echo esc_url( Repagify_Settings::settings_url() ); ?>" class="repagify-status-link">
 					<?php esc_html_e( 'Settings', 'repagify' ); ?>
@@ -613,7 +613,7 @@ $repagify_sortable = array( 'word_count', 'date', 'score' );
 								<?php else : ?>
 									<span
 										class="repagify-soon-wrap"
-										title="<?php esc_attr_e( 'Connect a Repagify account on the settings screen to generate content.', 'repagify' ); ?>"
+										title="<?php esc_attr_e( 'Generation is performed by the Repagify web service. Connect an account on the settings screen to use it.', 'repagify' ); ?>"
 									>
 										<button
 											type="button"
@@ -634,7 +634,7 @@ $repagify_sortable = array( 'word_count', 'date', 'score' );
 
 		<?php if ( ! $repagify_has_key ) : ?>
 			<p id="repagify-soon-note" class="repagify-hint">
-				<?php esc_html_e( 'Generating content needs a connected Repagify account. Scanning and scoring work without one.', 'repagify' ); ?>
+				<?php esc_html_e( 'Generation is carried out by the Repagify web service, so it needs a connected account. Everything else on this page works without one.', 'repagify' ); ?>
 			</p>
 		<?php endif; ?>
 
